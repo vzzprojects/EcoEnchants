@@ -24,7 +24,7 @@ jobs:
         excludes: draft
 
     - name: Download PlotSquared
-      run: git clone https://github.com/IntellectualSites/PlotSquared --branch ${{ steps.latestTag.outputs.release }}
+      run: git clone https://github.com/Auxilor/EcoEnchants --branch ${{ steps.latestTag.outputs.release }}
 
     - name: Run Gradle tasks
       run: |
@@ -39,7 +39,7 @@ jobs:
         tag_name: ${{ steps.latestTag.outputs.release }}
         body: |
           > [!NOTE]
-          > This release is based on [v${{ steps.latestTag.outputs.release }} of IntellectualSites/PlotSquared](https://github.com/IntellectualSites/PlotSquared/releases/tag/${{ steps.latestTag.outputs.release }}).
+          > This release is based on [v${{ steps.latestTag.outputs.release }} of Auxilor/EcoEnchants](https://github.com/Auxilor/EcoEnchants/releases/tag/${{ steps.latestTag.outputs.release }}).
           ${{ steps.latestTag.outputs.description }}
         generate_release_notes: false
         token: ${{ secrets.PAT }}

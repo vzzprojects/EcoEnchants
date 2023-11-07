@@ -16,8 +16,8 @@ jobs:
       - id: latestTag
         uses: pozetroninc/github-action-get-latest-release@master
         with:
-          owner: IntellectualSites
-          repo: PlotSquared
+          owner: Auxilor
+          repo: EcoEnchants
           excludes: draft
 
       - uses: mukunku/tag-exists-action@v1.4.0
