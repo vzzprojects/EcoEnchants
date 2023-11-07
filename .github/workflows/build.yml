@@ -1,4 +1,4 @@
-name: Build PlotSquared
+name: Build EcoEnchants
 
 on:
   workflow_dispatch:
@@ -19,23 +19,23 @@ jobs:
     - id: latestTag
       uses: pozetroninc/github-action-get-latest-release@master
       with:
-        owner: IntellectualSites
-        repo: PlotSquared
+        owner: Auxilor
+        repo: EcoEnchants
         excludes: draft
 
-    - name: Download PlotSquared
+    - name: Download EcoEnchants
       run: git clone https://github.com/Auxilor/EcoEnchants --branch ${{ steps.latestTag.outputs.release }}
 
     - name: Run Gradle tasks
       run: |
-        cd PlotSquared
+        cd EcoEnchants
         ./gradlew clean
         ./gradlew build
 
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        name: "PlotSquared v${{ steps.latestTag.outputs.release }}"
+        name: "EcoEnchants v${{ steps.latestTag.outputs.release }}"
         tag_name: ${{ steps.latestTag.outputs.release }}
         body: |
           > [!NOTE]
@@ -43,4 +43,4 @@ jobs:
           ${{ steps.latestTag.outputs.description }}
         generate_release_notes: false
         token: ${{ secrets.PAT }}
-        files: PlotSquared/Bukkit/build/libs/*.jar
+        files: EcoEnchants/Bukkit/build/libs/*.jar
