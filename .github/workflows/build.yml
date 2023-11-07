@@ -43,4 +43,4 @@ jobs:
           ${{ steps.latestTag.outputs.description }}
         generate_release_notes: false
         token: ${{ secrets.PAT }}
-        files: EcoEnchants/Bukkit/build/libs/*.jar
+        files: EcoEnchants/build/libs/*.jar
