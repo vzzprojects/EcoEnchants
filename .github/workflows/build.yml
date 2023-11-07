@@ -1,0 +1,46 @@
+name: Build PlotSquared
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+
+    - id: latestTag
+      uses: pozetroninc/github-action-get-latest-release@master
+      with:
+        owner: IntellectualSites
+        repo: PlotSquared
+        excludes: draft
+
+    - name: Download PlotSquared
+      run: git clone https://github.com/IntellectualSites/PlotSquared --branch ${{ steps.latestTag.outputs.release }}
+
+    - name: Run Gradle tasks
+      run: |
+        cd PlotSquared
+        ./gradlew clean
+        ./gradlew build
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: "PlotSquared v${{ steps.latestTag.outputs.release }}"
+        tag_name: ${{ steps.latestTag.outputs.release }}
+        body: |
+          > [!NOTE]
+          > This release is based on [v${{ steps.latestTag.outputs.release }} of IntellectualSites/PlotSquared](https://github.com/IntellectualSites/PlotSquared/releases/tag/${{ steps.latestTag.outputs.release }}).
+          ${{ steps.latestTag.outputs.description }}
+        generate_release_notes: false
+        token: ${{ secrets.PAT }}
+        files: PlotSquared/Bukkit/build/libs/*.jar
